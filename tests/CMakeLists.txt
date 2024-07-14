@@ -10,9 +10,10 @@ FetchContent_MakeAvailable(Catch2)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 
 add_executable(extra_tests 
+	"sandbox.cpp"
 	"trait/trait_from_nested_types.cpp" 
 	"trait/trait_from_specialization.cpp" 
-	"trait/trait_from_adl_bridge.cpp")
+	"trait/trait_from_adl_bridge.cpp" )
 
 target_compile_features(extra_tests 
 	PUBLIC cxx_std_20)

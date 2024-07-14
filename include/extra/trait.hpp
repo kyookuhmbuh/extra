@@ -7,7 +7,7 @@
 
 namespace extra
 {
-  template <typename Tag, typename T = void>
+  template <typename Tag, typename T>
   struct trait_impl;
 
   template <typename T, typename Tag>
@@ -36,29 +36,30 @@ namespace extra
   };
 
   template <typename T, typename Tag>
-  concept has_trait_impl_from_target_nested_type = requires {
-    {
-      typename T::template trait_impl<Tag>{}
+  concept has_trait_impl_from_target_nested_type =
+    not std::is_void_v<T> and requires {
+      {
+        typename T::template trait<Tag>{}
+      };
     };
-  };
 
   template <typename Tag, typename T>
     requires has_trait_impl_from_target_nested_type<T, Tag>
-  struct trait_impl<Tag, T> : T::template trait_impl<Tag>
+  struct trait_impl<Tag, T> : T::template trait<Tag>
   {};
 
   template <typename T, typename Tag>
   concept has_trait_impl_from_tag_nested_type =
     not std::is_void_v<T> and requires {
       {
-        typename Tag::template trait_impl<T>{}
+        typename Tag::template trait_for<T>{}
       };
     };
 
   template <typename Tag, typename T>
     requires has_trait_impl_from_tag_nested_type<T, Tag> and
              (not has_trait_impl_from_target_nested_type<T, Tag>)
-  struct trait_impl<Tag, T> : Tag::template trait_impl<T>
+  struct trait_impl<Tag, T> : Tag::template trait_for<T>
   {};
 
   namespace internal::trait_impl_from_adl
@@ -86,7 +87,7 @@ namespace extra
       std::invoke_result_t<type_identity_getter, std::type_identity<T>>::type;
 
     template <typename Tag, typename T>
-    using type = trait_impl_bridge<T>::template trait_impl<Tag>;
+    using type = trait_impl_bridge<T>::template trait<Tag>;
 
     template <typename T, template <typename...> typename Template>
     inline constexpr bool is_specialization_v = false;

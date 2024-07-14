@@ -22,10 +22,10 @@ namespace client
   struct target_enum_ext
   {
     template <typename...>
-    struct trait_impl;
+    struct trait;
 
     template <>
-    struct trait_impl<domain::to_string>
+    struct trait<domain::to_string>
     {
       constexpr char const* operator()(target_enum e) const noexcept
       {
@@ -42,7 +42,7 @@ namespace client
     };
 
     template <>
-    struct trait_impl<domain::validate>
+    struct trait<domain::validate>
     {
       constexpr bool operator()(target_enum e) const noexcept
       {
@@ -59,7 +59,7 @@ namespace client
   };
 
   // deduction guide for trait_impl
-  // (target_enum::trait_impl<Tag> -> target_enum_ext::trait_impl<Tag>)
+  // (target_enum::trait<Tag> -> target_enum_ext::trait<Tag>)
   auto trait_impl(std::type_identity<target_enum>)
     -> std::type_identity<target_enum_ext>;
 

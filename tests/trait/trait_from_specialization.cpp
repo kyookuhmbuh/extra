@@ -31,15 +31,18 @@ struct extra::trait_impl<domain::get_value, client::target>
 
 TEST_CASE("Invoke the trait from the regular specialization", "[trait]")
 {
-  REQUIRE(extra::has_trait<client::target, domain::get_value>);
-  REQUIRE(not extra::has_trait<client::ignorant, domain::get_value>);
+  using namespace client;
+  using namespace domain;
 
-  auto instance = client::target{ 12 };
+  REQUIRE(extra::has_trait<target, get_value>);
+  REQUIRE(not extra::has_trait<ignorant, get_value>);
+
+  auto instance = target{ 12 };
 
   SECTION("Invoke the trait")
   {
     instance.value = 4;
-    auto trait     = extra::trait<domain::get_value, client::target>;
+    auto trait     = extra::trait<get_value, target>;
     auto value     = trait(instance);
     REQUIRE(4 == value);
   }
@@ -47,7 +50,7 @@ TEST_CASE("Invoke the trait from the regular specialization", "[trait]")
   SECTION("Invoke the trait with a target type deducing")
   {
     instance.value = 84;
-    auto value     = extra::trait<domain::get_value>(instance);
+    auto value     = extra::trait<get_value>(instance);
     REQUIRE(84 == value);
   }
 }
