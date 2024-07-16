@@ -84,10 +84,10 @@ namespace extra
 
     template <typename T>
     using trait_impl_bridge =
-      std::invoke_result_t<type_identity_getter, std::type_identity<T>>::type;
+      typename std::invoke_result_t<type_identity_getter, std::type_identity<T>>::type;
 
     template <typename Tag, typename T>
-    using type = trait_impl_bridge<T>::template trait<Tag>;
+    using type = typename trait_impl_bridge<T>::template trait<Tag>;
 
     template <typename T, template <typename...> typename Template>
     inline constexpr bool is_specialization_v = false;
