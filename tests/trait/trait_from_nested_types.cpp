@@ -54,18 +54,19 @@ namespace client
     // inject name
     template <typename...>
     struct trait;
-
-    template <>
-    struct trait<domain::get_value>
-    {
-      constexpr auto operator()(target const& t) const noexcept
-      {
-        return t.value;
-      }
-    };
   };
 
   // impl get_value for target
+  template <>
+  struct target::trait<domain::get_value>
+  {
+    constexpr auto operator()(target const& t) const noexcept
+    {
+      return t.value;
+    }
+  };
+
+  // impl set_value for target
   template <>
   struct target::trait<domain::set_value>
   {
