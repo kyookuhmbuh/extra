@@ -23,39 +23,39 @@ namespace client
   {
     template <typename...>
     struct trait;
+  };
 
-    template <>
-    struct trait<domain::to_string>
+  template <>
+  struct target_enum_ext::trait<domain::to_string>
+  {
+    constexpr char const* operator()(target_enum e) const noexcept
     {
-      constexpr char const* operator()(target_enum e) const noexcept
+      switch (e)
       {
-        switch (e)
-        {
-          case target_enum::first:
-            return "first";
-          case target_enum::second:
-            return "second";
-          default:
-            return ""; // std::unreachable();
-        }
+        case target_enum::first:
+          return "first";
+        case target_enum::second:
+          return "second";
+        default:
+          return ""; // std::unreachable();
       }
-    };
+    }
+  };
 
-    template <>
-    struct trait<domain::validate>
+  template <>
+  struct target_enum_ext::trait<domain::validate>
+  {
+    constexpr bool operator()(target_enum e) const noexcept
     {
-      constexpr bool operator()(target_enum e) const noexcept
+      switch (e)
       {
-        switch (e)
-        {
-          case target_enum::first:
-          case target_enum::second:
-            return true;
-          default:
-            return false;
-        }
+        case target_enum::first:
+        case target_enum::second:
+          return true;
+        default:
+          return false;
       }
-    };
+    }
   };
 
   // deduction guide for trait_impl
