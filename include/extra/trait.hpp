@@ -8,16 +8,16 @@
 namespace extra
 {
   template <typename Tag, typename T = void>
-  struct trait_impl;
+  struct trait;
 
   template <typename T, typename Tag>
-  concept with_trait = requires { trait_impl<Tag, T>{}; };
+  concept with_trait = requires { trait<Tag, T>{}; };
 
   template <typename Tag = void, with_trait<Tag> T = void>
-  inline constexpr auto trait = trait_impl<Tag, T>{};
+  inline constexpr auto trait_v = trait<Tag, T>{};
 
   template <>
-  struct trait_impl<void, void>
+  struct trait<void, void>
   {
     using is_transparent = std::true_type;
 
@@ -26,18 +26,18 @@ namespace extra
               typename... U,
               typename Target = std::remove_cvref_t<T>>
       requires with_trait<Target, Tag> and
-               std::invocable<trait_impl<Tag, Target>, T, U...>
+               std::invocable<trait<Tag, Target>, T, U...>
     inline constexpr auto operator()(Tag, T&& target, U&&... args) const
-      noexcept(std::is_nothrow_invocable_v<trait_impl<Tag, Target>, T, U...>)
-        -> std::invoke_result_t<trait_impl<Tag, Target>, T, U...>
+      noexcept(std::is_nothrow_invocable_v<trait<Tag, Target>, T, U...>)
+        -> std::invoke_result_t<trait<Tag, Target>, T, U...>
     {
-      return trait<Tag, Target>(std::forward<T>(target),
-                                std::forward<U>(args)...);
+      return trait<Tag, Target>{}(std::forward<T>(target),
+                                  std::forward<U>(args)...);
     }
   };
 
   template <typename Tag>
-  struct trait_impl<Tag, void>
+  struct trait<Tag, void>
   {
     using is_transparent = std::true_type;
 
@@ -45,13 +45,13 @@ namespace extra
               typename... U,
               typename Target = std::remove_cvref_t<T>>
       requires with_trait<Target, Tag> and
-               std::invocable<trait_impl<Tag, Target>, T, U...>
+               std::invocable<trait<Tag, Target>, T, U...>
     inline constexpr auto operator()(T&& target, U&&... args) const
-      noexcept(std::is_nothrow_invocable_v<trait_impl<Tag, Target>, T, U...>)
-        -> std::invoke_result_t<trait_impl<Tag, Target>, T, U...>
+      noexcept(std::is_nothrow_invocable_v<trait<Tag, Target>, T, U...>)
+        -> std::invoke_result_t<trait<Tag, Target>, T, U...>
     {
-      return trait<Tag, Target>(std::forward<T>(target),
-                                std::forward<U>(args)...);
+      return trait<Tag, Target>{}(std::forward<T>(target),
+                                  std::forward<U>(args)...);
     }
   };
 
@@ -68,7 +68,7 @@ namespace extra
 
   template <typename Tag, typename T>
     requires trait_internal::has_trait_impl_from_target_nested_type<T, Tag>
-  struct trait_impl<Tag, T> : T::template trait<Tag>
+  struct trait<Tag, T> : T::template trait<Tag>
   {};
 
   namespace trait_internal
@@ -86,7 +86,7 @@ namespace extra
     requires trait_internal::has_trait_impl_from_tag_nested_type<T, Tag> and
              (not trait_internal::has_trait_impl_from_target_nested_type<T,
                                                                          Tag>)
-  struct trait_impl<Tag, T> : Tag::template trait_for<T>
+  struct trait<Tag, T> : Tag::template trait_for<T>
   {};
 
   namespace trait_internal
@@ -94,12 +94,12 @@ namespace extra
     namespace trait_impl_from_adl
     {
       template <typename... U>
-      void trait_impl(U...) = delete;
+      void trait(U...) = delete;
 
       template <typename... U>
       auto adl_helper(U... args)
       {
-        return trait_impl(args...);
+        return trait(args...);
       }
 
       struct type_identity_getter
@@ -132,7 +132,7 @@ namespace extra
       template <typename T, typename Tag>
       concept type_check = requires {
         {
-          trait_impl(std::type_identity<T>{})
+          trait(std::type_identity<T>{})
         } -> specialization_of_type_identity;
         {
           type<Tag, T>{}
@@ -147,7 +147,7 @@ namespace extra
 
   template <typename Tag, typename T>
     requires trait_internal::has_trait_impl_from_adl<T, Tag>
-  struct trait_impl<Tag, T> : trait_internal::trait_impl_from_adl::type<Tag, T>
+  struct trait<Tag, T> : trait_internal::trait_impl_from_adl::type<Tag, T>
   {};
 
 } // namespace extra

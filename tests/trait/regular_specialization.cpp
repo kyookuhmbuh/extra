@@ -21,7 +21,7 @@ namespace client
 } // namespace client
 
 template <>
-struct extra::trait_impl<domain::get_value, client::target>
+struct extra::trait<domain::get_value, client::target>
 {
   constexpr auto operator()(client::target const& target) const noexcept
   {
@@ -42,7 +42,7 @@ TEST_CASE("Invoke the trait from the regular specialization", "[trait]")
   SECTION("Invoke the trait")
   {
     instance.value = 4;
-    auto trait     = extra::trait<get_value, target>;
+    auto trait     = extra::trait_v<get_value, target>;
     auto value     = trait(instance);
     REQUIRE(4 == value);
   }
@@ -50,7 +50,7 @@ TEST_CASE("Invoke the trait from the regular specialization", "[trait]")
   SECTION("Invoke the trait with a target type deducing")
   {
     instance.value = 84;
-    auto value     = extra::trait<get_value>(instance);
+    auto value     = extra::trait_v<get_value>(instance);
     REQUIRE(84 == value);
   }
 }

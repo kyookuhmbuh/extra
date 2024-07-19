@@ -30,7 +30,7 @@ namespace domain
       {
         if (opt)
         {
-          return extra::trait<get_value, T>(*opt);
+          return extra::trait_v<get_value, T>(*opt);
         }
 
         return 0;
@@ -87,15 +87,15 @@ TEST_CASE("Check trait implemenations", "[trait]")
 
   SECTION("Invoke the trait")
   {
-    auto trait = extra::trait<get_value, target>;
+    auto trait = extra::trait_v<get_value, target>;
     auto value = trait(instance);
     REQUIRE(12 == value);
   }
 
   SECTION("Invoke the trait with a target type deducing")
   {
-    extra::trait<set_value>(instance, 881);
-    auto value = extra::trait<get_value>(instance);
+    extra::trait_v<set_value>(instance, 881);
+    auto value = extra::trait_v<get_value>(instance);
     REQUIRE(881 == value);
   }
 
@@ -104,7 +104,7 @@ TEST_CASE("Check trait implemenations", "[trait]")
     REQUIRE(extra::with_trait<ignorant, get_value>);
     REQUIRE(not extra::with_trait<ignorant, set_value>);
 
-    auto value = extra::trait<get_value>(ignorant{});
+    auto value = extra::trait_v<get_value>(ignorant{});
     REQUIRE(0 == value);
   }
 
@@ -114,11 +114,11 @@ TEST_CASE("Check trait implemenations", "[trait]")
     REQUIRE(extra::with_trait<std::optional<target>, get_value>);
 
     std::optional<target> opt_null{};
-    auto value_from_opt_null = extra::trait<get_value>(opt_null);
+    auto value_from_opt_null = extra::trait_v<get_value>(opt_null);
     REQUIRE(0 == value_from_opt_null);
 
-    auto value1 = extra::trait<get_value>(std::as_const(instance));
-    auto value2 = extra::trait<get_value>(std::optional(instance));
+    auto value1 = extra::trait_v<get_value>(std::as_const(instance));
+    auto value2 = extra::trait_v<get_value>(std::optional(instance));
     REQUIRE(12 == value1);
     REQUIRE(12 == value2);
   }

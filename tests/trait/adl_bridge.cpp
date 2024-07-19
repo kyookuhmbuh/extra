@@ -58,9 +58,9 @@ namespace client
     }
   };
 
-  // deduction guide for trait_impl
+  // deduction guide for trait
   // (target_enum::trait<Tag> -> target_enum_ext::trait<Tag>)
-  auto trait_impl(std::type_identity<target_enum>)
+  auto trait(std::type_identity<target_enum>)
     -> std::type_identity<target_enum_ext>;
 
 } // namespace client
@@ -75,8 +75,8 @@ TEST_CASE("Trait from the adl bridge", "[trait]")
   static_assert(not extra::with_trait<ignorant, validate>);
 
   constexpr target_enum e = target_enum::first;
-  static_assert(extra::trait<validate>(e));
+  static_assert(extra::trait_v<validate>(e));
 
-  constexpr auto str = extra::trait<to_string>(e);
+  constexpr auto str = extra::trait_v<to_string>(e);
   static_assert("first"sv == str);
 }

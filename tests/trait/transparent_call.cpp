@@ -5,7 +5,7 @@
 struct get_twelve
 {};
 
-struct get_seven : extra::trait_impl<get_seven>
+struct get_seven : extra::trait<get_seven>
 {
   template <typename...>
   struct trait_for;
@@ -41,25 +41,25 @@ TEST_CASE("Check trait implemenations from transparent call", "[trait]")
 
   SECTION("Invoke without deducing")
   {
-    auto twelve = extra::trait<get_twelve, empty>(value);
+    auto twelve = extra::trait_v<get_twelve, empty>(value);
     REQUIRE(12 == twelve);
   }
 
   SECTION("Invoke with deducing of target type")
   {
-    auto twelve = extra::trait<get_twelve>(value);
+    auto twelve = extra::trait_v<get_twelve>(value);
     REQUIRE(12 == twelve);
   }
 
   SECTION("Invoke with deducing of tag and target types")
   {
-    auto twelve = extra::trait<>(get_twelve{}, value);
+    auto twelve = extra::trait_v<>(get_twelve{}, value);
     REQUIRE(12 == twelve);
   }
 
   SECTION("Invoke via a special object")
   {
-    auto seven = extra::trait<>(get_seven{}, value);
+    auto seven = extra::trait_v<>(get_seven{}, value);
     REQUIRE(7 == seven);
   }
 
