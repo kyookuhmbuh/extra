@@ -23,7 +23,7 @@ namespace domain
     };
 
     // delegating impl
-    template <extra::has_trait<get_value> T>
+    template <extra::with_trait<get_value> T>
     struct trait_for<std::optional<T>>
     {
       constexpr auto operator()(std::optional<T> const& opt) const noexcept
@@ -83,7 +83,7 @@ TEST_CASE("Check trait implemenations", "[trait]")
   using namespace client;
   using namespace domain;
 
-  extra::has_trait<get_value> auto instance = target{ 12 };
+  extra::with_trait<get_value> auto instance = target{ 12 };
 
   SECTION("Invoke the trait")
   {
@@ -101,8 +101,8 @@ TEST_CASE("Check trait implemenations", "[trait]")
 
   SECTION("Invoke the default implementation")
   {
-    REQUIRE(extra::has_trait<ignorant, get_value>);
-    REQUIRE(not extra::has_trait<ignorant, set_value>);
+    REQUIRE(extra::with_trait<ignorant, get_value>);
+    REQUIRE(not extra::with_trait<ignorant, set_value>);
 
     auto value = extra::trait<get_value>(ignorant{});
     REQUIRE(0 == value);
@@ -110,8 +110,8 @@ TEST_CASE("Check trait implemenations", "[trait]")
 
   SECTION("Invoke the delegating implementation")
   {
-    REQUIRE(extra::has_trait<target, get_value>);
-    REQUIRE(extra::has_trait<std::optional<target>, get_value>);
+    REQUIRE(extra::with_trait<target, get_value>);
+    REQUIRE(extra::with_trait<std::optional<target>, get_value>);
 
     std::optional<target> opt_null{};
     auto value_from_opt_null = extra::trait<get_value>(opt_null);

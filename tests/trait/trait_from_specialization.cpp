@@ -34,8 +34,8 @@ TEST_CASE("Invoke the trait from the regular specialization", "[trait]")
   using namespace client;
   using namespace domain;
 
-  REQUIRE(extra::has_trait<target, get_value>);
-  REQUIRE(not extra::has_trait<ignorant, get_value>);
+  REQUIRE(extra::with_trait<target, get_value>);
+  REQUIRE(not extra::with_trait<ignorant, get_value>);
 
   auto instance = target{ 12 };
 

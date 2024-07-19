@@ -71,8 +71,8 @@ TEST_CASE("Trait from the adl bridge", "[trait]")
   using namespace client;
   using namespace domain;
 
-  static_assert(extra::has_trait<target_enum, validate>);
-  static_assert(not extra::has_trait<ignorant, validate>);
+  static_assert(extra::with_trait<target_enum, validate>);
+  static_assert(not extra::with_trait<ignorant, validate>);
 
   constexpr target_enum e = target_enum::first;
   static_assert(extra::trait<validate>(e));
