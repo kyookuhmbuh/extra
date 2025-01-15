@@ -55,12 +55,12 @@
         "with-docs",
         "with-tests"
       ],
-      "name": "x86_64-pc-linux-gnu",
+      "name": "x86_64-linux-gnu",
       "description": "x86_64 Linux",
       "environment": {
         "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror -Wno-macro-redefined",
-        "CROSS_COMPILER_FLAGS": "-target x86_64-pc-linux-gnu -march=x86-64 -mtune=generic",
-        "CROSS_LINKER_FLAGS": "-target x86_64-pc-linux-gnu -fuse-ld=lld"
+        "CROSS_COMPILER_FLAGS": "-target x86_64-linux-gnu -march=x86-64 -mtune=generic",
+        "CROSS_LINKER_FLAGS": "-target x86_64-linux-gnu -fuse-ld=lld"
       },
       "cacheVariables": {
         "CMAKE_SYSTEM_NAME": "Linux",
@@ -75,12 +75,12 @@
     },
     {
       "inherits": ["ninja-multi-config", "with-package", "with-docs"],
-      "name": "arm-unknown-linux-gnueabihf",
+      "name": "arm-linux-gnueabihf",
       "description": "ARMhf Linux",
       "environment": {
         "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror -Wno-macro-redefined",
-        "CROSS_COMPILER_FLAGS": "-target arm-unknown-linux-gnueabihf -march=armv7-a -mfpu=neon -mfloat-abi=hard",
-        "CROSS_LINKER_FLAGS": "-target arm-unknown-linux-gnueabihf -fuse-ld=lld"
+        "CROSS_COMPILER_FLAGS": "-target arm-linux-gnueabihf -march=armv7-a -mfpu=neon -mfloat-abi=hard",
+        "CROSS_LINKER_FLAGS": "-target arm-linux-gnueabihf -fuse-ld=lld"
       },
       "cacheVariables": {
         "CMAKE_SYSTEM_NAME": "Linux",
@@ -101,23 +101,23 @@
   ],
   "buildPresets": [
     {
-      "name": "x86_64-pc-linux-gnu-debug",
-      "configurePreset": "x86_64-pc-linux-gnu",
+      "name": "x86_64-linux-gnu-debug",
+      "configurePreset": "x86_64-linux-gnu",
       "configuration": "Debug"
     },
     {
-      "name": "x86_64-pc-linux-gnu-release",
-      "configurePreset": "x86_64-pc-linux-gnu",
+      "name": "x86_64-linux-gnu-release",
+      "configurePreset": "x86_64-linux-gnu",
       "configuration": "Release"
     },
     {
-      "name": "arm-unknown-linux-gnueabihf-debug",
-      "configurePreset": "arm-unknown-linux-gnueabihf",
+      "name": "arm-linux-gnueabihf-debug",
+      "configurePreset": "arm-linux-gnueabihf",
       "configuration": "Debug"
     },
     {
-      "name": "arm-unknown-linux-gnueabihf-release",
-      "configurePreset": "arm-unknown-linux-gnueabihf",
+      "name": "arm-linux-gnueabihf-release",
+      "configurePreset": "arm-linux-gnueabihf",
       "configuration": "Release"
     },
     {
@@ -139,13 +139,13 @@
     },
     {
       "inherits": ["base"],
-      "name": "x86_64-pc-linux-gnu",
-      "configurePreset": "x86_64-pc-linux-gnu"
+      "name": "x86_64-linux-gnu",
+      "configurePreset": "x86_64-linux-gnu"
     },
     {
       "inherits": ["base"],
-      "name": "arm-unknown-linux-gnueabihf",
-      "configurePreset": "arm-unknown-linux-gnueabihf"
+      "name": "arm-linux-gnueabihf",
+      "configurePreset": "arm-linux-gnueabihf"
     },
     {
       "inherits": ["base"],
@@ -163,74 +163,74 @@
     },
     {
       "inherits": ["base"],
-      "name": "x86_64-pc-linux-gnu",
+      "name": "x86_64-linux-gnu",
       "displayName": "x86_64 Linux Package",
       "description": "Package for x86_64 Linux",
-      "configurePreset": "x86_64-pc-linux-gnu"
+      "configurePreset": "x86_64-linux-gnu"
     },
     {
       "inherits": ["base"],
-      "name": "arm-unknown-linux-gnueabihf",
+      "name": "arm-linux-gnueabihf",
       "displayName": "ARMhf Linux Package",
       "description": "Package for ARMhf Linux",
-      "configurePreset": "arm-unknown-linux-gnueabihf"
+      "configurePreset": "arm-linux-gnueabihf"
     }
   ],
   "workflowPresets": [
     {
-      "name": "test-x86_64-pc-linux-gnu",
+      "name": "test-x86_64-linux-gnu",
       "displayName": "Test for x86_64 Linux",
       "description": "Build project for x86_64 Linux and test",
       "steps": [
         {
           "type": "configure",
-          "name": "x86_64-pc-linux-gnu"
+          "name": "x86_64-linux-gnu"
         },
         {
           "type": "build",
-          "name": "x86_64-pc-linux-gnu-debug"
+          "name": "x86_64-linux-gnu-debug"
         },
         {
           "type": "test",
-          "name": "x86_64-pc-linux-gnu"
+          "name": "x86_64-linux-gnu"
         }
       ]
     },
     {
-      "name": "pack-x86_64-pc-linux-gnu",
+      "name": "pack-x86_64-linux-gnu",
       "displayName": "Pack for x86_64 Linux",
       "description": "Build project for x86_64 Linux and pack",
       "steps": [
         {
           "type": "configure",
-          "name": "x86_64-pc-linux-gnu"
+          "name": "x86_64-linux-gnu"
         },
         {
           "type": "build",
-          "name": "x86_64-pc-linux-gnu-release"
+          "name": "x86_64-linux-gnu-release"
         },
         {
           "type": "package",
-          "name": "x86_64-pc-linux-gnu"
+          "name": "x86_64-linux-gnu"
         }
       ]
     },
     {
-      "name": "pack-arm-unknown-linux-gnueabihf",
+      "name": "pack-arm-linux-gnueabihf",
       "displayName": "Pack for ARMhf Linux",
       "description": "Build project for ARMhf Linux and pack",
       "steps": [
         {
           "type": "configure",
-          "name": "arm-unknown-linux-gnueabihf"
+          "name": "arm-linux-gnueabihf"
         },
         {
           "type": "build",
-          "name": "arm-unknown-linux-gnueabihf-release"
+          "name": "arm-linux-gnueabihf-release"
         },
         {
           "type": "package",
-          "name": "arm-unknown-linux-gnueabihf"
+          "name": "arm-linux-gnueabihf"
         }
       ]
     }
