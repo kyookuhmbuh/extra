@@ -1,45 +1,51 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(extra
-  VERSION 1.0.0
-  LANGUAGES CXX)
+project(
+  extra
+  DESCRIPTION "General-purpose utility components"
+  LANGUAGES CXX
+  VERSION 0.1.1
+)
 
-add_library(extra STATIC)
+option(
+  EXTRA_BUILD_TESTS
+  "Enable building tests and test infrastructure. Default: ${PROJECT_IS_TOP_LEVEL}."
+  ${PROJECT_IS_TOP_LEVEL}
+)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+add_library(extra INTERFACE)
 add_library(extra::extra ALIAS extra)
 
-target_compile_features(extra PUBLIC cxx_std_20)
+target_compile_features(extra INTERFACE cxx_std_20)
 
-target_sources(extra
-  PUBLIC FILE_SET HEADERS
-  BASE_DIRS
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/src
-  FILES
-    include/extra/args.hpp
-    include/extra/atomic_flags.hpp
-    include/extra/debug.hpp
-    include/extra/enum_flags.hpp
-    include/extra/extra.hpp
-    include/extra/hash_combine.hpp
-    include/extra/overloaded.hpp
-    include/extra/synch.hpp
-    include/extra/variant_alternative.hpp
-    include/extra/variant_visitor.hpp
+target_sources(
+  extra
+  PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS
+      ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_sources(extra
-  PRIVATE
-    src/lib.cpp
-)
+set_target_properties(extra PROPERTIES VERIFY_INTERFACE_HEADER_SETS ON)
+add_subdirectory(include/extra)
+
+if(EXTRA_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests/extra)
+endif()
 
 include(GNUInstallDirs)
 
-install(TARGETS extra
+install(
+  TARGETS extra
   EXPORT ${PROJECT_NAME}_targets
   FILE_SET HEADERS
 )
 
-install(EXPORT ${PROJECT_NAME}_targets
+install(
+  EXPORT ${PROJECT_NAME}_targets
   FILE ${PROJECT_NAME}Config.cmake
   NAMESPACE ${PROJECT_NAME}::
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}

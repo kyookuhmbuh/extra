@@ -13,13 +13,12 @@
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_CXX_STANDARD_REQUIRED": true,
-        "CMAKE_CXX_EXTENSIONS": false,
-        "CMAKE_VERIFY_INTERFACE_HEADER_SETS": true
+        "CMAKE_CXX_EXTENSIONS": false
       }
     },
     {
-      "inherits": ["base"],
       "name": "ninja-multi-config",
+      "inherits": ["base"],
       "hidden": true,
       "generator": "Ninja Multi-Config",
       "cacheVariables": {
@@ -28,37 +27,11 @@
       }
     },
     {
-      "name": "with-docs",
-      "hidden": true,
-      "cacheVariables": {
-        "BUILD_DOCUMENTATION": true
-      }
-    },
-    {
-      "name": "with-tests",
-      "hidden": true,
-      "cacheVariables": {
-        "BUILD_TESTING": true
-      }
-    },
-    {
-      "name": "with-package",
-      "hidden": true,
-      "cacheVariables": {
-        "CPACK_PACKAGING_INSTALL_PREFIX": "/usr/local"
-      }
-    },
-    {
-      "inherits": [
-        "ninja-multi-config",
-        "with-package",
-        "with-docs",
-        "with-tests"
-      ],
       "name": "x86_64-linux-gnu",
       "description": "x86_64 Linux",
+      "inherits": ["ninja-multi-config"],
       "environment": {
-        "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror -Wno-macro-redefined",
+        "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror",
         "CROSS_COMPILER_FLAGS": "-target x86_64-linux-gnu -march=x86-64 -mtune=generic",
         "CROSS_LINKER_FLAGS": "-target x86_64-linux-gnu -fuse-ld=lld"
       },
@@ -67,18 +40,18 @@
         "CMAKE_SYSTEM_PROCESSOR": "x86_64",
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_C_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS}",
+        "CMAKE_C_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS} $env{COMPILER_HARDENING_FLAGS}",
         "CMAKE_CXX_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS} $env{COMPILER_HARDENING_FLAGS}",
         "CMAKE_EXE_LINKER_FLAGS_INIT": "$env{CROSS_LINKER_FLAGS}",
         "CMAKE_SHARED_LINKER_FLAGS_INIT": "$env{CROSS_LINKER_FLAGS}"
       }
     },
     {
-      "inherits": ["ninja-multi-config", "with-package", "with-docs"],
       "name": "arm-linux-gnueabihf",
       "description": "ARMhf Linux",
+      "inherits": ["ninja-multi-config"],
       "environment": {
-        "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror -Wno-macro-redefined",
+        "COMPILER_HARDENING_FLAGS": "-pedantic -Wall -Wextra -Werror",
         "CROSS_COMPILER_FLAGS": "-target arm-linux-gnueabihf -march=armv7-a -mfpu=neon -mfloat-abi=hard",
         "CROSS_LINKER_FLAGS": "-target arm-linux-gnueabihf -fuse-ld=lld"
       },
@@ -87,16 +60,16 @@
         "CMAKE_SYSTEM_PROCESSOR": "arm",
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_C_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS}",
+        "CMAKE_C_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS} $env{COMPILER_HARDENING_FLAGS}",
         "CMAKE_CXX_FLAGS_INIT": "$env{CROSS_COMPILER_FLAGS} $env{COMPILER_HARDENING_FLAGS}",
         "CMAKE_EXE_LINKER_FLAGS_INIT": "$env{CROSS_LINKER_FLAGS}",
         "CMAKE_SHARED_LINKER_FLAGS_INIT": "$env{CROSS_LINKER_FLAGS}"
       }
     },
     {
-      "inherits": ["base", "with-package", "with-docs", "with-tests"],
       "name": "default",
-      "description": "Default"
+      "description": "Default",
+      "inherits": ["base"]
     }
   ],
   "buildPresets": [
@@ -138,18 +111,18 @@
       "configuration": "Debug"
     },
     {
-      "inherits": ["base"],
       "name": "x86_64-linux-gnu",
+      "inherits": ["base"],
       "configurePreset": "x86_64-linux-gnu"
     },
     {
-      "inherits": ["base"],
       "name": "arm-linux-gnueabihf",
+      "inherits": ["base"],
       "configurePreset": "arm-linux-gnueabihf"
     },
     {
-      "inherits": ["base"],
       "name": "default",
+      "inherits": ["base"],
       "configurePreset": "default"
     }
   ],
@@ -162,17 +135,17 @@
       "configurations": ["Release"]
     },
     {
-      "inherits": ["base"],
       "name": "x86_64-linux-gnu",
       "displayName": "x86_64 Linux Package",
       "description": "Package for x86_64 Linux",
+      "inherits": ["base"],
       "configurePreset": "x86_64-linux-gnu"
     },
     {
-      "inherits": ["base"],
       "name": "arm-linux-gnueabihf",
       "displayName": "ARMhf Linux Package",
       "description": "Package for ARMhf Linux",
+      "inherits": ["base"],
       "configurePreset": "arm-linux-gnueabihf"
     }
   ],
