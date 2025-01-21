@@ -1,5 +1,6 @@
 CompileFlags:
-  Add: [-D_CLANGD=1, -Wall, -Wextra, -Wpedantic]
+  CompilationDatabase: .build
+  Add: [-D_CLANGD=1, -pedantic, -Wall, -Wextra]
 
 Index:
   Background: Build

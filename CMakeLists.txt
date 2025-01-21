@@ -14,6 +14,7 @@ option(
 )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(CompilationDatabase)
 
 add_library(extra INTERFACE)
 add_library(extra::extra ALIAS extra)
