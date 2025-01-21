@@ -9,7 +9,7 @@ project(
 
 option(
   EXTRA_BUILD_TESTS
-  "Enable building tests and test infrastructure. Default: ${PROJECT_IS_TOP_LEVEL}."
+  "Enable building tests. Default: ${PROJECT_IS_TOP_LEVEL}."
   ${PROJECT_IS_TOP_LEVEL}
 )
 
