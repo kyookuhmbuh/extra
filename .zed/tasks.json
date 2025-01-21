@@ -22,7 +22,8 @@
     "label": "CMake Preset: test",
     "command": "ctest",
     "args": [
-      "--preset=\"$(cmake --list-presets=test | fzf --header-lines=2 | xargs -n1 | head -n1)\""
+      "--preset=\"$(cmake --list-presets=test | fzf --header-lines=2 | xargs -n1 | head -n1)\"",
+      "--output-on-failure"
     ],
     "show_command": false
   },

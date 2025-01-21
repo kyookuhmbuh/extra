@@ -108,7 +108,8 @@
     {
       "name": "base",
       "hidden": true,
-      "configuration": "Debug"
+      "configuration": "Debug",
+      "output": { "outputOnFailure": true }
     },
     {
       "name": "x86_64-linux-gnu",
