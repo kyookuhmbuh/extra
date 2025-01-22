@@ -1,6 +1,4 @@
 
-include(AddGoogleTest)
-
 add_executable(extra_unit_tests)
 target_compile_features(extra_unit_tests PUBLIC cxx_std_20)
 

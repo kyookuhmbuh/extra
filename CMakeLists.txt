@@ -34,6 +34,7 @@ add_subdirectory(include/extra)
 
 if(EXTRA_BUILD_TESTS)
   enable_testing()
+  add_subdirectory(extern/googletest)
   add_subdirectory(tests/extra)
 endif()
 
