@@ -1,0 +1,11 @@
+CompileFlags:
+  Add: [-D_CLANGD=1, -Wall, -Wextra, -Wpedantic]
+
+Index:
+  Background: Build
+
+Completion:
+  AllScopes: true
+
+Documentation:
+  CommentFormat: Doxygen
