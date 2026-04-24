@@ -14,9 +14,6 @@ namespace extra
   /// This is useful for constraining visitor objects for `std::visit`,
   /// ensuring that the callable can handle all types contained in the variant.
   ///
-  /// @tparam T       Callable type to check.
-  /// @tparam Variant Variant type whose alternatives must be accepted.
-  ///
   /// Example:
   ///
   /// ```cpp
