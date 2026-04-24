@@ -14,9 +14,6 @@ namespace extra
   /// This is useful for constraining templates or functions that should
   /// only accept types present in a given `std::variant`.
   ///
-  /// @tparam T       Type to check.
-  /// @tparam Variant Variant type to inspect.
-  ///
   /// Example:
   ///
   /// ```cpp
