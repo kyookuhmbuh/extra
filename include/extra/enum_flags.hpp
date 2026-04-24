@@ -26,8 +26,6 @@ namespace extra::flags
   /// This concept requires:
   /// - The type to be an enum.
   /// - The enum to be explicitly opted in via is_enum_flags.
-  ///
-  /// @tparam Flags Enum type representing a set of bit flags.
   template <typename Flags>
   concept enum_flags = std::is_enum_v<Flags> and is_enum_flags_v<Flags>;
 
