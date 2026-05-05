@@ -45,6 +45,7 @@
     "command": "cmake",
     "args": [
       "--workflow",
+      "--fresh",
       "--preset=\"$(cmake --list-presets=workflow | fzf --header-lines=2 | xargs -n1 | head -n1)\""
     ],
     "show_command": false,
