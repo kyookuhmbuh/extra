@@ -1,7 +1,8 @@
 
 # Compilation database
-.build/
-.build
+out/
+build/
+compile_commands.json
 
 # Prerequisites
 *.d
