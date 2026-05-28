@@ -6,6 +6,7 @@ target_sources(
   extra_unit_tests
   PRIVATE
     synch.test.cpp
+    hex_dump.test.cpp
     enum_flags.test.cpp
 )
 
