@@ -5,11 +5,13 @@ include_guard(GLOBAL)
   Enables generation of `compile_commands.json`, which contains the exact
   compiler invocations for all translation units in a machine-readable format.
 
-  @note When using the Ninja Multi-Config generator, CMake emits compilation
-  commands for all configurations for each source file (e.g. Debug, Release,
-  RelWithDebInfo, MinSizeRel). Observations from clangd logs show that clangd
-  always selects commands corresponding to the Debug configuration,
-  likely because it is the first configuration encountered in the file.
+  When using the Ninja Multi-Config generator, CMake emits compilation commands
+  for all configurations for each source file (e.g. Debug, Release,
+  RelWithDebInfo, MinSizeRel).
+
+  Observations from clangd logs show that clangd always selects commands
+  corresponding to the Debug configuration, likely because it is the first
+  configuration encountered in the file.
 #]]
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -27,9 +29,7 @@ option(
 )
 
 function(_compdb_create_symlink)
-  get_filename_component(_expected_binary_dir
-    "${CMAKE_SOURCE_DIR}/build" ABSOLUTE
-  )
+  get_filename_component(_expected_binary_dir "${CMAKE_SOURCE_DIR}/build" ABSOLUTE)
   get_filename_component(_actual_binary_dir "${CMAKE_BINARY_DIR}" ABSOLUTE)
 
   if(_actual_binary_dir STREQUAL _expected_binary_dir)
