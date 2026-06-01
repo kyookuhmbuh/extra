@@ -8,7 +8,7 @@
 #include <extra/atomic_flags.hpp>
 #include <extra/enum_flags.hpp>
 #include <extra/hash_combine.hpp>
-#include <extra/hex_dump.hpp>
+#include <extra/hexdump.hpp>
 #include <extra/overloaded.hpp>
 #include <extra/synch.hpp>
 #include <extra/variant_alternative.hpp>
