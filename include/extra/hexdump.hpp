@@ -22,7 +22,7 @@ namespace extra
   /// @code
   /// 00000000: 48 65 6c 6c 6f 20 77 6f  72 6c 64              Hello world
   /// @endcode
-  struct hex_dump
+  struct hexdump
   {
     /// Input byte sequence to format.
     std::span<std::byte const> input;
@@ -36,7 +36,7 @@ namespace extra
     /// @param manip Hex dump formatter instance.
     ///
     /// @return Reference to the output stream.
-    friend std::ostream& operator<<(std::ostream& output, hex_dump const& manip)
+    friend std::ostream& operator<<(std::ostream& output, hexdump const& manip)
     {
       auto old_flags = output.flags();
       output << std::hex << std::setfill('0');
@@ -103,11 +103,11 @@ namespace extra
   /// @param bytes_per_line Number of bytes displayed per line.
   ///
   /// @return String containing the formatted hex dump.
-  [[nodiscard]] inline std::string make_hex_dump(
+  [[nodiscard]] inline std::string make_hexdump(
     std::span<std::byte const> input,
     std::size_t                bytes_per_line = 16)
   {
     return std::invoke(
-      hex_dump{ .input = input, .bytes_per_line = bytes_per_line });
+      hexdump{ .input = input, .bytes_per_line = bytes_per_line });
   }
 } // namespace extra
