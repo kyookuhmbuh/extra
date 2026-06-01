@@ -10,7 +10,7 @@ target_sources(
       enum_flags.hpp
       extra.hpp
       hash_combine.hpp
-      hex_dump.hpp
+      hexdump.hpp
       overloaded.hpp
       synch.hpp
       variant_alternative.hpp
